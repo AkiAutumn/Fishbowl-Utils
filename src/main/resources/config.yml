@@ -1,0 +1,4 @@
+elytra-takeoff-enabled: true
+elytra-takeoff-check-blocks-above-player: true
+elytra-takeoff-radius: 50
+elytra-takeoff-world: "world"

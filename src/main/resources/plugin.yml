@@ -1,0 +1,4 @@
+name: Fishbowl-Utils
+version: '1.0-SNAPSHOT'
+main: annika.fishbowlUtils.FishbowlUtils
+api-version: '1.21'
