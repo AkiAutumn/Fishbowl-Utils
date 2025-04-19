@@ -2,15 +2,19 @@ name: Fishbowl-Utils
 version: '1.0-SNAPSHOT'
 main: annika.fishbowlUtils.FishbowlUtils
 api-version: '1.21'
+softdepend: [GrimAC]
 
 commands:
   fixPlayer:
     description: Fix a players gliding state
-    usage: /fixPlayer <name>
     permission: fishbowl-utils.fixPlayer
-    permission-message: You don't have permission to use this command.
+  config-edit:
+    permission: fishbowl-utils.config-edit
 
 permissions:
   fishbowl-utils.fixPlayer:
     description: Allows use of /fixPlayer command
+    default: op
+  fishbowl-utils.config-edit:
+    description: Allows use of /config-edit command
     default: op

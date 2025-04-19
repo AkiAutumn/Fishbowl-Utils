@@ -8,12 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+import static annika.fishbowlUtils.FishbowlUtils.getPlugin;
 
 public class elytraTakeoff {
 
@@ -21,21 +22,20 @@ public class elytraTakeoff {
 
     public static void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
 
-        Plugin plugin = FishbowlUtils.getProvidingPlugin(FishbowlUtils.class);
-        boolean elytraTakeoffEnabled = plugin.getConfig().getBoolean("elytra-takeoff-enabled");
+        boolean elytraTakeoffEnabled = getPlugin().getConfig().getBoolean("elytra-takeoff-enabled");
 
         if (!elytraTakeoffEnabled) {
             return;
         }
 
-        int spawnRadius = plugin.getConfig().getInt("elytra-takeoff-radius");
-        String worldName = plugin.getConfig().getString("elytra-takeoff-world");
+        int spawnRadius = getPlugin().getConfig().getInt("elytra-takeoff-radius");
+        String worldName = getPlugin().getConfig().getString("elytra-takeoff-world");
 
         if (worldName == null) {
             return;
         }
 
-        World world = plugin.getServer().getWorld(worldName);
+        World world = getPlugin().getServer().getWorld(worldName);
         Player player = event.getPlayer();
         Location playerLocation = player.getLocation();
 
@@ -43,7 +43,7 @@ public class elytraTakeoff {
             return;
         }
 
-        boolean checkBlocksAbovePlayer = plugin.getConfig().getBoolean("elytra-takeoff-check-blocks-above-player");
+        boolean checkBlocksAbovePlayer = getPlugin().getConfig().getBoolean("elytra-takeoff-check-blocks-above-player");
 
         if (checkBlocksAbovePlayer && !checkBlocksAbovePlayer(player)) {
             return;
@@ -60,6 +60,7 @@ public class elytraTakeoff {
                 event.setCancelled(true);
 
                 glidingPlayersUUIDs.add(player.getUniqueId());
+                FishbowlUtils.exemptFromAntiCheat(player);
 
                 new ParticleBuilder(Particle.CLOUD)
                         .location(playerLocation.add(0, .1, 0))
@@ -71,9 +72,9 @@ public class elytraTakeoff {
                 player.getWorld().playSound(playerLocation, Sound.ENTITY_PARROT_FLY, 1, 1);
                 player.setVelocity(velocity);
 
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
                     event.getPlayer().setGliding(true);
-                }, 10L); // Delay of 10 ticks
+                }, 10L);
             }
         }
     }
@@ -90,6 +91,10 @@ public class elytraTakeoff {
                 event.setCancelled(true);
             } else {
                 glidingPlayersUUIDs.remove(player.getUniqueId());
+
+                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                    FishbowlUtils.unexemptFromAntiCheat(player);
+                }, 2L);
             }
         }
     }
