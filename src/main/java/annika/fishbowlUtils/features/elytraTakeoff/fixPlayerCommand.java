@@ -1,6 +1,9 @@
 package annika.fishbowlUtils.features.elytraTakeoff;
 
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.SoundCategory;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,11 +18,13 @@ public class fixPlayerCommand implements CommandExecutor {
 
         if(!sender.hasPermission("fishbowl-utils.fixPlayer")) {
             sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:red:dark_red>No permission - leck Eier!</gradient>"));
+            sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 0f));
             return true;
         }
 
         if(args.length != 1) {
             sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:red:dark_red>Invalid argument length</gradient>"));
+            sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 0f));
             return true;
         }
 
@@ -27,12 +32,14 @@ public class fixPlayerCommand implements CommandExecutor {
 
         if(player == null) {
             sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:red:dark_red>Player not found</gradient>"));
+            sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 0f));
             return true;
         }
 
         player.setGliding(false);
         glidingPlayersUUIDs.remove(player.getUniqueId());
-        sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:light_purple:dark_purple>Fixed " + player.getName() + "</gradient>"));
+        sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:light_purple:blue>Fixed " + player.getName() + "</gradient>"));
+        sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 1f));
 
         return true;
     }
