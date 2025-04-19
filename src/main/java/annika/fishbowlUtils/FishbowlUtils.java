@@ -1,5 +1,6 @@
 package annika.fishbowlUtils;
 
+import annika.fishbowlUtils.features.elytraTakeoff.fixPlayerCommand;
 import annika.fishbowlUtils.listeners.EntityToggleGlideListener;
 import annika.fishbowlUtils.listeners.PlayerSwapHandItemsListener;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ public final class FishbowlUtils extends JavaPlugin {
         // Plugin startup logic
         saveDefaultConfig();
         listenerRegistration();
+        commandRegistration();
     }
 
     @Override
@@ -24,5 +26,9 @@ public final class FishbowlUtils extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerSwapHandItemsListener(), this);
         pluginManager.registerEvents(new EntityToggleGlideListener(), this);
+    }
+
+    private void commandRegistration() {
+        getCommand("fixPlayer").setExecutor(new fixPlayerCommand());
     }
 }

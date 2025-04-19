@@ -2,3 +2,15 @@ name: Fishbowl-Utils
 version: '1.0-SNAPSHOT'
 main: annika.fishbowlUtils.FishbowlUtils
 api-version: '1.21'
+
+commands:
+  fixPlayer:
+    description: Fix a players gliding state
+    usage: /fixPlayer <name>
+    permission: fishbowl-utils.fixPlayer
+    permission-message: You don't have permission to use this command.
+
+permissions:
+  fishbowl-utils.fixPlayer:
+    description: Allows use of /fixPlayer command
+    default: op

@@ -17,7 +17,7 @@ import java.util.UUID;
 
 public class elytraTakeoff {
 
-    private static final Set<UUID> glidingPlayersUUIDs = new HashSet<>();
+    public static final Set<UUID> glidingPlayersUUIDs = new HashSet<>();
 
     public static void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
 
