@@ -55,18 +55,6 @@
             <id>papermc-repo</id>
             <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-        <repository>
-            <id>md_5-snapshots</id>
-            <url>https://repo.md-5.net/content/repositories/snapshots/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -74,17 +62,6 @@
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.21.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.grimanticheat</groupId>
-            <artifactId>GrimAPI</artifactId>
-            <version>master</version>
-        </dependency>
-        <dependency>
-            <groupId>fr.neatmonster</groupId>
-            <artifactId>nocheatplus</artifactId>
-            <version>3.16.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

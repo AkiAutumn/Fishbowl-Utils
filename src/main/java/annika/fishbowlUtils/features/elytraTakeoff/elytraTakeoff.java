@@ -1,6 +1,5 @@
 package annika.fishbowlUtils.features.elytraTakeoff;
 
-import annika.fishbowlUtils.FishbowlUtils;
 import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -60,7 +59,6 @@ public class elytraTakeoff {
                 event.setCancelled(true);
 
                 glidingPlayersUUIDs.add(player.getUniqueId());
-                FishbowlUtils.exemptFromAntiCheat(player);
 
                 new ParticleBuilder(Particle.CLOUD)
                         .location(playerLocation.add(0, .1, 0))
@@ -91,10 +89,6 @@ public class elytraTakeoff {
                 event.setCancelled(true);
             } else {
                 glidingPlayersUUIDs.remove(player.getUniqueId());
-
-                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-                    FishbowlUtils.unexemptFromAntiCheat(player);
-                }, 2L);
             }
         }
     }

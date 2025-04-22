@@ -1,23 +1,19 @@
 package annika.fishbowlUtils.features.elytraTakeoff;
 
-import annika.fishbowlUtils.FishbowlUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.SoundCategory;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static annika.fishbowlUtils.FishbowlUtils.getPlugin;
 import static annika.fishbowlUtils.features.elytraTakeoff.elytraTakeoff.glidingPlayersUUIDs;
 
-public class fixPlayerCommand implements CommandExecutor {
+public class Command implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 
         if(!sender.hasPermission("fishbowl-utils.fixPlayer")) {
             sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:red:dark_red>No permission - leck Eier!</gradient>"));
@@ -41,10 +37,6 @@ public class fixPlayerCommand implements CommandExecutor {
 
         player.setGliding(false);
         glidingPlayersUUIDs.remove(player.getUniqueId());
-
-        Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
-            FishbowlUtils.unexemptFromAntiCheat(player);
-        }, 2L);
 
         sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:light_purple:blue>Fixed " + player.getName() + "</gradient>"));
         sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 1f));
