@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="fishbowl-utils">
-    <output-path>$PROJECT_DIR$/out/artifacts/fishbowl_utils</output-path>
+    <output-path>F:/Minecraft Servers/Paper 1.21.4/plugins</output-path>
     <root id="archive" name="fishbowl-utils.jar">
       <element id="module-output" name="fishbowl-utils" />
     </root>

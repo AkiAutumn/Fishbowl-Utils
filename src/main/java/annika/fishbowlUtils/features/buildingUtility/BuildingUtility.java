@@ -12,7 +12,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,13 +25,20 @@ public class BuildingUtility {
 
         if(!enabledPlayers.contains(event.getPlayer().getUniqueId())) return;
 
-        Plugin plugin = FishbowlUtils.getPlugin();
+        if (!FishbowlUtils.instance.getConfig().getBoolean("allow-invalid-block-placement")) return;
 
-        if (!plugin.getConfig().getBoolean("allow-invalid-block-placement")) return;
+        int spawnRadius = FishbowlUtils.instance.getConfig().getInt("spawn-protection-radius");
+        Location spawnLocation = Bukkit.getWorld("world").getSpawnLocation();
 
         Block clickedBlock = event.getClickedBlock();
 
-        if(event.isBlockInHand() && event.getAction() == Action.RIGHT_CLICK_BLOCK && clickedBlock != null) {
+        if (clickedBlock == null) return;
+
+        Location blockLocation = clickedBlock.getLocation();
+
+        if (Math.abs(spawnLocation.x() - blockLocation.x()) <= spawnRadius && Math.abs(spawnLocation.y() - blockLocation.y()) <= spawnRadius && Math.abs(spawnLocation.z() - blockLocation.z()) <= spawnRadius) return;
+
+        if(event.isBlockInHand() && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
             BlockFace blockFace = event.getBlockFace();
 
@@ -43,9 +49,12 @@ public class BuildingUtility {
             Location targetLocation = clickedBlock.getLocation().add(modX, modY, modZ);
             Block block = targetLocation.getBlock();
             Material originalType = block.getType();
+
+            if (originalType != Material.AIR) return;
+
             Material newType = event.getItem().getType();
 
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            Bukkit.getScheduler().runTaskLater(FishbowlUtils.instance, () -> {
                 if (block.getType() == originalType) {
 
                     // Check if player is placing hanging sign

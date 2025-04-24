@@ -1,5 +1,6 @@
 package annika.fishbowlUtils.features.elytraTakeoff;
 
+import annika.fishbowlUtils.FishbowlUtils;
 import com.destroystokyo.paper.ParticleBuilder;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -13,28 +14,26 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import static annika.fishbowlUtils.FishbowlUtils.getPlugin;
-
 public class elytraTakeoff {
 
     public static final Set<UUID> glidingPlayersUUIDs = new HashSet<>();
 
     public static void playerSwapHandItemsEvent(PlayerSwapHandItemsEvent event) {
 
-        boolean elytraTakeoffEnabled = getPlugin().getConfig().getBoolean("elytra-takeoff-enabled");
+        boolean elytraTakeoffEnabled = FishbowlUtils.instance.getConfig().getBoolean("elytra-takeoff-enabled");
 
         if (!elytraTakeoffEnabled) {
             return;
         }
 
-        int spawnRadius = getPlugin().getConfig().getInt("elytra-takeoff-radius");
-        String worldName = getPlugin().getConfig().getString("elytra-takeoff-world");
+        int spawnRadius = FishbowlUtils.instance.getConfig().getInt("elytra-takeoff-radius");
+        String worldName = FishbowlUtils.instance.getConfig().getString("elytra-takeoff-world");
 
         if (worldName == null) {
             return;
         }
 
-        World world = getPlugin().getServer().getWorld(worldName);
+        World world = FishbowlUtils.instance.getServer().getWorld(worldName);
         Player player = event.getPlayer();
         Location playerLocation = player.getLocation();
 
@@ -42,7 +41,7 @@ public class elytraTakeoff {
             return;
         }
 
-        boolean checkBlocksAbovePlayer = getPlugin().getConfig().getBoolean("elytra-takeoff-check-blocks-above-player");
+        boolean checkBlocksAbovePlayer = FishbowlUtils.instance.getConfig().getBoolean("elytra-takeoff-check-blocks-above-player");
 
         if (checkBlocksAbovePlayer && !checkBlocksAbovePlayer(player)) {
             return;
@@ -70,7 +69,7 @@ public class elytraTakeoff {
                 player.getWorld().playSound(playerLocation, Sound.ENTITY_PARROT_FLY, 1, 1);
                 player.setVelocity(velocity);
 
-                Bukkit.getScheduler().runTaskLater(getPlugin(), () -> {
+                Bukkit.getScheduler().runTaskLater(FishbowlUtils.instance, () -> {
                     event.getPlayer().setGliding(true);
                 }, 10L);
             }

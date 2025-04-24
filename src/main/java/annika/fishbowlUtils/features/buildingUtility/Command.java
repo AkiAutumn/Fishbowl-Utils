@@ -8,7 +8,6 @@ import org.bukkit.SoundCategory;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.UUID;
 
@@ -19,9 +18,7 @@ public class Command implements CommandExecutor {
 
         if (sender instanceof Player player) {
 
-            Plugin plugin = FishbowlUtils.getPlugin();
-
-            if (!plugin.getConfig().getBoolean("allow-invalid-block-placement")) {
+            if (!FishbowlUtils.instance.getConfig().getBoolean("allow-invalid-block-placement")) {
                 sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:red:dark_red>This feature has been disabled by administrators</gradient>"));
                 sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 0f));
                 return true;

@@ -1,5 +1,6 @@
 package annika.fishbowlUtils.features.configEditor;
 
+import annika.fishbowlUtils.FishbowlUtils;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -7,7 +8,6 @@ import org.bukkit.SoundCategory;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import static annika.fishbowlUtils.FishbowlUtils.getPlugin;
 
 public class Command implements CommandExecutor {
 
@@ -30,7 +30,7 @@ public class Command implements CommandExecutor {
         String value = args[1];
         String type = args[2].toLowerCase();
 
-        FileConfiguration config = getPlugin().getConfig();
+        FileConfiguration config = FishbowlUtils.instance.getConfig();
 
         // Example: If you want to set a string value in the config
         if (config.contains(key)) {
@@ -80,7 +80,7 @@ public class Command implements CommandExecutor {
                     return true;
             }
 
-            getPlugin().saveConfig();  // Save the changes immediately
+            FishbowlUtils.instance.saveConfig();  // Save the changes immediately
             sender.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:aqua:green>Config value updated</gradient>"));
             sender.playSound(Sound.sound(Key.key("minecraft:block.note_block.hat"), SoundCategory.NEUTRAL, 1f, 1f));
         } else {

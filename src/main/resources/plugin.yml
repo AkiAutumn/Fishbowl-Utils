@@ -1,5 +1,5 @@
 name: Fishbowl-Utils
-version: '1.0-SNAPSHOT'
+version: '6.9'
 main: annika.fishbowlUtils.FishbowlUtils
 api-version: '1.21'
 
@@ -9,7 +9,6 @@ commands:
   config-edit:
     permission: fishbowl-utils.config-edit
   toggle-invalid-placement:
-
 
 permissions:
   fishbowl-utils.fixPlayer:

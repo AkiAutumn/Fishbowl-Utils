@@ -1,17 +1,19 @@
 package annika.fishbowlUtils;
 
-import annika.fishbowlUtils.listeners.EntityToggleGlideListener;
-import annika.fishbowlUtils.listeners.PlayerInteractListener;
-import annika.fishbowlUtils.listeners.PlayerSwapHandItemsListener;
+import annika.fishbowlUtils.listeners.*;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class FishbowlUtils extends JavaPlugin {
 
+    public static FishbowlUtils instance;
+
     @Override
     public void onEnable() {
+
+        instance = this;
+
         saveDefaultConfig();
         listenerRegistration();
         commandRegistration();
@@ -28,9 +30,5 @@ public final class FishbowlUtils extends JavaPlugin {
         getCommand("fixPlayer").setExecutor(new annika.fishbowlUtils.features.elytraTakeoff.Command());
         getCommand("config-edit").setExecutor(new annika.fishbowlUtils.features.configEditor.Command());
         getCommand("toggle-invalid-placement").setExecutor(new annika.fishbowlUtils.features.buildingUtility.Command());
-    }
-
-    public static Plugin getPlugin() {
-        return FishbowlUtils.getProvidingPlugin(FishbowlUtils.class);
     }
 }
